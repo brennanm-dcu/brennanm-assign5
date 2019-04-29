@@ -39,7 +39,10 @@
             android:label="@string/title_activity_new_questions_create" />
         <activity
             android:name=".QuestionsEnd"
-            android:label="@string/title_activity_questions_end"></activity>
+            android:label="@string/title_activity_questions_end" />
+        <activity
+            android:name=".Video"
+            android:label="@string/title_activity_video"></activity>
     </application>
 
 </manifest>

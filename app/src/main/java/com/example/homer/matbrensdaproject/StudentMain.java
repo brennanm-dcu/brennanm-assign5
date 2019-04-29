@@ -20,10 +20,11 @@ import android.widget.Toast;
 public class StudentMain extends Activity {
     private Button studentBtn;          // Button reference 'studentBtn' for the Button on the layout.
     private EditText studentID;         // EditText Reference 'studentID' for the EditText box on the
-                                        // layout which takes in the student 'name' or 'ID'.
+    // layout which takes in the student 'name' or 'ID'.
     private String selectedSubject;    // Variable reference to the subject selected by student to be tested on.
+    Button videoBtn;                   // Button reference 'videoBtn' for the Button on the layout to access a DemoVideo.
 
-   @Override   // onCreate method
+    @Override   // onCreate method
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_main);
@@ -36,8 +37,18 @@ public class StudentMain extends Activity {
             selectedSubject = extras.getString("keySubject");  // Subject selected by user Sent from MainActivity
         }
         // The following sets the references to layout objects.
-        studentBtn=(Button)findViewById(R.id.student_button);
-        studentID =(EditText)findViewById(R.id.student_editText);
+        studentBtn = (Button) findViewById(R.id.student_button);
+        studentID = (EditText) findViewById(R.id.student_editText);
+        videoBtn = (Button) findViewById(R.id.videoBnt);
+
+        // Listener on the Video Button which linke to the Video activity to display a Demo Video
+        videoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StudentMain.this, Video.class);
+                startActivity(intent);
+            }
+        });
 
         //The following set a listener on the Button 'studentBtn'
         studentBtn.setOnClickListener(new View.OnClickListener() {

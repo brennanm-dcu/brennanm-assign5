@@ -9,8 +9,8 @@
     <string name="title_activity_third">ThirdActivity</string>
     <string name="title_activity_student_main">StudentMain</string>
 
-
-    <string name="student_textView">Rapid Assessment</string>
+    <string name="welcome_textView">WELCOME TO!</string>
+    <string name="student_textView">- The Rapid Assessment APP -</string>
     <string name="student_textView2">Please Enter Your Name or Student ID Number </string>
     <string name="student_button">Press to Start Test</string>
     <string name="student_input_name">Enter Name or Student ID</string>
@@ -23,7 +23,7 @@
     <string name="radioBtn2">RadioButton 2</string>
     <string name="radioBtn3">RadioButton 3</string>
     <string name="radioBtn4">RadioButton 4</string>
-    <string name="nextBtn">NEXT BUTTON</string>
+    <string name="nextBtn">NEXT QUESTION</string>
     <string name="user_info_textView">QUESTION -</string>
     <string name="qnumber_textView">Q</string>
 
@@ -75,4 +75,10 @@
 
     <string name="score_texttView">Score Text:</string>
     <string name="finish_texttView">New Test COMPLETED!</string>
+    <string name="image_socretes">Image of Socretes:</string>
+    <string name="title_activity_video">Video</string>
+    <string name="videoTextView">Video Demonstration on using the Multiple Choice Quiz</string>
+    <string name="videoBtn">QUIZ VIDEO DEMONSTRATION</string>
+    <string name="quiz_image">QUIZ Image</string>
+    <string name="quiz_demo_description">QUIZ DEMO</string>
 </resources>
