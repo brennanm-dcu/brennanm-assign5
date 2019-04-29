@@ -47,6 +47,7 @@ The application will use of the following Android API classes:
 //questions which when completed are sent to the Firebase Database for access by students. There is also a facility for the administrator to download all
 // scores returned from then students after taking the tests.
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -57,11 +58,12 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText Name;                    // EditText reference for the EditText box on the layout which receives the users login input string
+    private EditText userInput;               // EditText reference for the EditText box on the layout which receives the users login input string
     private EditText Password;                // EditText reference for the EditText box on the layout which receives the users login password string
     private TextView Remaining_Attempts;      // TextView reference to a TextView which displays the number of remaining attempts to login.
     private Button LoginBtn;                  // Reference to a Button on the layout for logging in.
     private int attempts =5;                  // This int sets the number of attempts for logging in allowed(Currently set to 5).
+    private String uInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // The following sets the references to layout objects.
-        Name = (EditText)findViewById(R.id.login_name);
+        userInput = (EditText)findViewById(R.id.login_name);
         Password = (EditText)findViewById(R.id.login_password);
         Remaining_Attempts = (TextView) findViewById(R.id.login_attempts_remaining);
         LoginBtn = (Button) findViewById(R.id.login_button);
@@ -82,25 +84,27 @@ public class MainActivity extends AppCompatActivity {
         LoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validate(Name.getText().toString(), Password.getText().toString());
+                validate(userInput.getText().toString(), Password.getText().toString());
             }
         });
     }// End of OnCreate
 
     // The validate method below compares the input data with the correct data and allows access if they match.
     // Admin and User whill be directed to their respective Activities on correct login.
-    private void validate (String uName, String uPassword){
-        //Admin Login
-        if ((uName .equals("Admin")) && (uPassword .equals("1234"))) {
-            //  Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+    private void validate (String uInput, String uPassword){
+        // The following converts the string to uppercase, allowing flexibility for the user input.
+        // Also IMPORTANT as all subjects will be titles in Uppercase in the Database
+        uInput = uInput.toUpperCase(); //Admin Login
+        if ((uInput .equals("ADMIN")) && (uPassword .equals("1234"))) {
+             //  Intent intent = new Intent(MainActivity.this, SecondActivity.class);
             //  startActivity(intent);
         }
+        //The following converts the string to uppercase,
         //User Login
-        else if ((uName .equals("User")) && (uPassword .equals("12345"))){
-            //   Intent intent = new Intent(MainActivity.this, ThirdActivity.class);
-
-            //   intent .putExtra("key",uPassword);
-            //   startActivity(intent);
+        else if (uPassword .equals("111")){
+             Intent intent = new Intent(MainActivity.this, StudentMain.class);
+             intent .putExtra("keySubject",uInput);
+             startActivity(intent);
         }
         //Exceeded allowed number of logins
         else {
