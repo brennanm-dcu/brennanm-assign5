@@ -1,34 +1,6 @@
 package com.example.homer.matbrensdaproject;
-
-/*
-******************** StudentTest Activity *******************************
-
-The StudentTest Activity basically retrieves each question for the test from the Firsbase database,
-one  at a time, and displays the elements of each question on a listview. From which the student
-can select a right answer, then precede to the next question. This repeat until the test is over.
-This activity starts with an Intent from the StudentMain Activity. It first retrieves the name of
-the test from stored preferences where it was stored by the StudentMain Activity.
-Then it retrieves the first question from The Firebase Database for the particular test. Each question
-has a key to reference it in the database 'qx', where x is then question number. Each question has six
-parts, one is the question text itself and this always has key 'q'. Then there are four possible answers
-to the question always with keys 'a1' to 'a4', and finally there is the number of the correct answer
-which always has key "ans'. These keys are standard for each question.
-The six question parts, the question data, is retrieved by the readQuestionData method using FirebaseCallback
-to counter the asychronous aspect of downloading from Firebase. The readQuestionData method takes one part of
-the question at a time from the database and places it in a list. On method call the list is returned and
-in the body of the code the list elements are assigned to the respective layout elements and sisplayed to the
-student. The student then select an answer and presses 'NEXT QUESTION'. The answer selected is checked against the
-correct answer and if correct the score counter is incremented as is the question counter.
-The question counter is compared to the number of questons in the test and this determines if the test ends.
-At the end of processing each equestion, to restart the process, an Intent is activate to start Activity EnsTest and
-the score count and question count is passed in extras to it. The EndTest Activity, if it is not the last question, immediately
-activates an intent to start the StudenTest activity again, passing score count and question count back to it so it can process
-the next question from the start.
-*/
-
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +8,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,7 +16,30 @@ import com.google.firebase.database.ValueEventListener;
 import android.content.SharedPreferences;
 import java.util.ArrayList;
 import java.util.List;
-
+// ************************************ StudentTest Activity ***************************************
+/**
+ * The StudentTest Activity basically retrieves each question for the test from the Firsbase database,
+*one  at a time, and displays the elements of each question on a listview. From which the student
+*can select a right answer, then precede to the next question. This repeat until the test is over.
+*This activity starts with an Intent from the StudentMain Activity. It first retrieves the name of
+*the test from stored preferences where it was stored by the StudentMain Activity.
+*Then it retrieves the first question from The Firebase Database for the particular test. Each question
+*has a key to reference it in the database 'qx', where x is then question number. Each question has six
+*parts, one is the question text itself and this always has key 'q'. Then there are four possible answers
+*to the question always with keys 'a1' to 'a4', and finally there is the number of the correct answer
+*which always has key "ans'. These keys are standard for each question.
+*The six question parts, the question data, is retrieved by the readQuestionData method using FirebaseCallback
+*to counter the asychronous aspect of downloading from Firebase. The readQuestionData method takes one part of
+*the question at a time from the database and places it in a list. On method call the list is returned and
+*in the body of the code the list elements are assigned to the respective layout elements and sisplayed to the
+*student. The student then select an answer and presses 'NEXT QUESTION'. The answer selected is checked against the
+*correct answer and if correct the score counter is incremented as is the question counter.
+*The question counter is compared to the number of questions in the test and this determines if the test ends.
+*At the end of processing each question, to restart the process, an Intent is activate to start Activity EnsTest and
+*the score count and question count is passed in extras to it. The EndTest Activity, if it is not the last question, immediately
+*activates an intent to start the StudenTest activity again, passing score count and question count back to it so it can process
+*the next question from the start.
+*/
 public class StudentTest extends Activity {
 
     private DatabaseReference multiple_choice_testDatabase;         //Initialise DatabaseReference for reference to question level
@@ -67,9 +61,7 @@ public class StudentTest extends Activity {
     String questionTitle = "q1";                                    // String Variable to hold the name of the current question, initialised here to "q1".
     String answer;                                                  // String Variable to hold the number of the right answer to the question from the list of options.
     String Student;
-
     ArrayList <String> question_data_list= new ArrayList<String>();     // ArrayList to hold strings of question data such as question Text, answers, and correct answer
-
     // onCreate Method
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +102,6 @@ public class StudentTest extends Activity {
             questionNo.setText("Q" + 1 + " of " + no_of_questions);
         } // End of initialising the activity
 
-
         // The following bundle thakes in information sent with Intentions from EndTest activity.
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -148,10 +139,8 @@ public class StudentTest extends Activity {
             // will hold the list number of the correct answer.
             // The sixth element of the returned list will hold the question text.
             public void onCallback(final List<String> question_list) {
-
                 // The following extracts the question part of the question data from the list question_data_list
                 final String question_text = question_data_list.get(5);
-
                 // The following extracts the answer parts of the question data from the list question_data_list
                 // and saves the questions to the relevant 'btn' variables
                 String btn1 = question_data_list.get(0);
@@ -260,20 +249,24 @@ public class StudentTest extends Activity {
 
     }  // End of OnCreate
 
-    //  **************  The FirebaseCallback method 'readQuestionData' ***************
-    // The FirebaseCallback method 'readQuestionData', below, extracts the question data for a question
-    // from the FireBase Database. Basically in the FireBase Database this Android Application has
-    // it own Database which contains Multiple Choice Tests for different Subjects. Each Subject Test
-    // will have a number of  multiple choice questions and each question will have its own record
-    // containing all the data pertaining to that multiple choice question.
-    // So each question has 'question data' made up  of six String elements. These elements are:
-    // 1) Question text,
-    // 2) to 5) Answer Options for the question (Four of)
-    // 6) The number of the location of Right Answer in the sequence of answers.
-    // All this information is used to process one question and forms the question data which may be
-    // held in a list of six String Items or in the FresBase Database as the elements of a question
-    // chlid of a Test Subject Child off then main Applications main Database.
-    private void readQuestionData(final FirebaseCallback firebaseCallback){
+    /**
+     *       **************  The FirebaseCallback method 'readQuestionData' ***************
+     * The FirebaseCallback method 'readQuestionData', below, extracts the question data for a question
+     * from the FireBase Database. Basically in the FireBase Database this Android Application has
+     * it own Database which contains Multiple Choice Tests for different Subjects. Each Subject Test
+     * will have a number of  multiple choice questions and each question will have its own record
+     * containing all the data pertaining to that multiple choice question.
+     * So each question has 'question data' made up  of six String elements. These elements are:
+     * 1) Question text,
+     * 2) to 5) Answer Options for the question (Four of)
+     * 6) The number of the location of Right Answer in the sequence of answers.
+     * All this information is used to process one question and forms the question data which may be
+     * held in a list of six String Items or in the FresBase Database as the elements of a question
+     * chlid of a Test Subject Child off then main Applications main Database.
+     *
+     * @param firebaseCallback This method extracts question data from then Firebase Database.
+     */
+      private void readQuestionData(final FirebaseCallback firebaseCallback){
         // The following adds a ValueEventListener to the DatabaseReference multiple_choice_testDatabase
         multiple_choice_testDatabase.addValueEventListener(new ValueEventListener() {
             // The following creates a DataSnapshot of the  DatabaseReference multiple_choice_testDatabase
@@ -301,10 +294,13 @@ public class StudentTest extends Activity {
     private interface FirebaseCallback {
         void onCallback(List <String> question_list);
     }
-    // The following method takes in the subject title for the test and determines the number of
-    // questions available, which it then stored in SharedPreferences where it will be used
-    // in Activity NextQuestion.java later.
-    private void numOfQuestions(String subject) {
+
+    /**
+     *   The following method takes in the subject title for the test and determines the number of
+     * questions available, which it then stored in SharedPreferences where it will be used
+     * in Activity NextQuestion.java later.
+     */
+      private void numOfQuestions(String subject) {
         //The following DatabaseReference 'length_testDatabase' will reference as far as the Test title, then
         // it will add a listener and take a DataSnapshot, then use the method 'getChildrenCount' to determine the number
         // of children (questions) available and save this number in variable 'no_of_questions'.

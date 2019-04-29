@@ -1,20 +1,4 @@
 package com.example.homer.matbrensdaproject;
-
-
-/*
-   - Welcome to AdminExtra Activity this is where Questions are created for the new Test, with help from the AdminEnd Activity. The -
-    questions are then sent to a Database in FireBase. The name of the new Test is taken from the intent sent from the Admin Activity.
-    This is then used with a set question format, to produce the questions. Basically each iteration through the code produces a
-    question and each question is referred to as 'qx' where x is the question number. Each question will have the same notation in
-    its layout. There will be six Strings of data taken from six EditText boxed on the layout. There will be a question String,
-    referred to as "q", there will be four alternative answers each referred to as "a1" to "a4" and finally there will be a variable
-    that holds then number of the right answer from the four alternatives.
-    Each cycle provides six empty EditText boxes to the user and only when they are all filled in, and the 'ADD QUESTION' button is
-    pressed, will that question be sent to the Database and the the cycle begins again with six empty EditText boxes until the
-    finish Button is pressed. In restarting a cycle the AdminExtra Activity must be restarted and this is done
-    by sending an Intent to the AdminEnd Activity with Question Number and Test Name data. This activity then immediately sents
-    an Intent back to the AdminExtra Activity to begin the cycle again with the data.
- */
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
@@ -26,11 +10,24 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-
+//  ***********************************************- NewQuestionsCreate-*********************************************************************
+/**
+ *   Welcome to NewQuestionsCreate Activity this is where Questions are created for the new Test, with help from the QuestionsEnd Activity. The
+ *   questions when created, are then sent to a Database in FireBase. The name of the new Test is taken from the intent sent from the AdminMain Activity.
+ *   This is then used with a set question format, to produce the questions. Basically each iteration through the code produces a
+ *   question and each question is referred to as 'qx' where x is the question number. Each question will have the same notation in
+ *   its layout. There will be six Strings of data taken from six EditText boxed on the layout. There will be a question String,
+ *   referred to as "q", there will be four alternative answers each referred to as "a1" to "a4" and finally there will be a variable
+ *   that holds then number of the right answer from the four alternatives.
+ *   Each cycle provides six empty EditText boxes to the user and only when they are all filled in, and the 'ADD QUESTION' button is
+ *   pressed, will that question be sent to the Database and the the cycle begins again with six empty EditText boxes until the
+ *   finish Button is pressed. In restarting a cycle the AdminExtra Activity must be restarted and this is done
+ *   by sending an Intent to the QuestionsEnd Activity with Question Number and Test Name data. This activity then immediately sends
+ *   an Intent back to the AdminExtra Activity to begin the cycle again with the data.
+ */
 public class NewQuestionsCreate extends Activity {
 
-    private DatabaseReference myNewTestDatabase;              //Initialise FirebaseDatabase Reference for reference to where to store data in the FireBase Database
+    private DatabaseReference myNewTestDatabase;               //Initialise Firebase Database Reference for reference to where to store data in the FireBase Database
     private TextView QuestNo;                                  // TextView reference to a textView to display the question number on the layout
     private TextView testTitle;
     private EditText editNewQuestion;                          // EditView reference to an EditView on the layout to take in the question text.
@@ -46,11 +43,10 @@ public class NewQuestionsCreate extends Activity {
     private Button btnfinish;                                  // Button reference to the Finish button.
     private Button addQuestion;                                // Button reference to the adQuestion button.
 
-    @Override
+    @Override  //on create Method
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_questions_create);
-
 
         // The following sets references to the layout objects.
         QuestNo=(TextView)findViewById(R.id.q_number_textView);
@@ -96,7 +92,8 @@ public class NewQuestionsCreate extends Activity {
         }
         // The following sets the Test Title in the 'testTitle' ViewText
         testTitle.setText("Test Title - " + newTestName);
-
+        // The following sets an onClick Listener  on the Finish Button and when pressed
+        // an Intent is activated to activate the QuestionsEnd activity.
         btnfinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,12 +101,11 @@ public class NewQuestionsCreate extends Activity {
                 startActivity(intent);
             }
         });
-
+        // The following sets an ocClick listener on the 'AddQuestion' button and when pressed
+        // the data entered into the question fields on the layout is captured in the relevant strings.
         addQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 String newQuestion = editNewQuestion.getText().toString().trim();
                 String newA1 = editNewA1.getText().toString().trim();
                 String newA2 = editNewA2.getText().toString().trim();
@@ -120,31 +116,25 @@ public class NewQuestionsCreate extends Activity {
                 //The following checks that all EditText boxes have been filled in and if not a Toast is displayed to remind the user to do so.
                 if ((newQuestion.equals("")) || (newA1.equals("")) || (newA2.equals("")) || (newA3.equals("")) || (newA4.equals("")) || (newAns.equals("")) ) {
                     Toast.makeText(NewQuestionsCreate.this, "Please Fill In All Options!" + newTestName, Toast.LENGTH_SHORT).show();
+                // If all EditText boxes have been filled in then the question data is set in the Firebase database to form a question in the test
+                // This is followed by incrementing the Question number and then sending an Intent to activate the 'QuestionsEnd' activity and pass the current
+                // question number and test name strings in putExtras.
                 }else {
-
                     myNewTestDatabase.child("q").setValue(newQuestion);
                     myNewTestDatabase.child("a1").setValue(newA1);
                     myNewTestDatabase.child("a2").setValue(newA2);
                     myNewTestDatabase.child("a3").setValue(newA3);
                     myNewTestDatabase.child("a4").setValue(newA4);
                     myNewTestDatabase.child("ans").setValue(newAns);
-
                     newQuestionNumber++;
-
-
                     Intent intent = new Intent(NewQuestionsCreate.this, QuestionsEnd.class);
                     intent.putExtra("QUESTION_NUM", newQuestionNumber);
                     intent.putExtra("TEST_NAME", newTestName);
-
                     startActivity(intent);
                 }
             }
         });
-
-
-
     }
-
 }
 
 

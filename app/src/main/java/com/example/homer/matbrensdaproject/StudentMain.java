@@ -1,13 +1,4 @@
 package com.example.homer.matbrensdaproject;
-
-/*
-******************** StudentMain Activity *******************************
-
-The StudentMain Activity starts with an Intent from the MainActivity Login with
-the subject "NAME" for the test, input by the student, in the Intent extras.
-This activity then takes in a student name from the user and then stores it and the
-subject 'NAME" in shared preferences and then launches the StudentTest Activity with an intent.
-*/
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,13 +7,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+// ******************** StudentMain Activity *******************************
+/**
+ * The StudentMain Activity starts with an Intent from the MainActivity Login with
+ *the subject "NAME" for the test, input by the student, in the Intent Extras.
+ *This activity then takes in a student name from the user and then stores it, and the
+ *subject 'NAME", in sharedPreferences and then launches the StudentTest Activity with an intent.
+*/
 public class StudentMain extends Activity {
     private Button studentBtn;          // Button reference 'studentBtn' for the Button on the layout.
     private EditText studentID;         // EditText Reference 'studentID' for the EditText box on the
-    // layout which takes in the student 'name' or 'ID'.
-    private String selectedSubject;    // Variable reference to the subject selected by student to be tested on.
-    Button videoBtn;                   // Button reference 'videoBtn' for the Button on the layout to access a DemoVideo.
+                                        // layout which takes in the student 'name' or 'ID'.
+    private String selectedSubject;     // Variable reference to the subject selected by student to be tested on.
+    Button videoBtn;                    // Button reference 'videoBtn' for the Button on the layout to access a DemoVideo.
 
     @Override   // onCreate method
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +41,11 @@ public class StudentMain extends Activity {
         // Listener on the Video Button which linke to the Video activity to display a Demo Video
         videoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+             public void onClick(View v) {
                 Intent intent = new Intent(StudentMain.this, Video.class);
                 startActivity(intent);
             }
         });
-
         //The following set a listener on the Button 'studentBtn'
         studentBtn.setOnClickListener(new View.OnClickListener() {
             @Override

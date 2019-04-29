@@ -1,8 +1,7 @@
 package com.example.homer.matbrensdaproject;
 
-
 /*
-****************************** Matthew Brennan - SDA PROJECT - Student No -17112702 *****************************
+******************************* Matthew Brennan - SDA PROJECT - Student No -17112702 *****************************
 *
                                                    PROJECT PROPOSAL
 
@@ -28,43 +27,38 @@ the stores, than providing a whole computer room.
 The Application:
 
 The Application would allow the instructor to quickly produce a set of simple multiple choice questions with short answers.
-Then convey tests to the students via a download from a Firebase Database.
-Then students will then open the questions on the app and when all questions are answered, the results will automatically calculated and sent to the Database,
+Then convey the tests to the students via a download from a Firebase Database.
+Then students will then open the questions on the app, and when all questions are answered, the results will automatically calculated and sent to the Database,
 where they can be accessed by the app.
 
 The application will use of the following Android API classes:
 1.	Multimedia graphics
-2. Firebase Database – to store questions.
-
+2.  Firebase Database – to store questions.
 
  ***************************************************************************************************************
-
                                                        APPLICATION OPERATION
 Normal User(student) access:
-A normal User will be given a Login which is the Name or Number of the Test they are to undertake, and a password. On successful access
+A normal User will be given a Login which is the Name or Number of the Test they are to undertake, and a general user password, not specific to one student. On successful access
 they will be directed to the Student section of the application where they will be required to input their Name or Student ID. When this is completed, and
-the continue Button pressed, the app will download the questions for the respective test from the Firebase Database and begin to
+the continue Button pressed, the app will download the questions for the relevant test from the Firebase Database and begin to
 display a series of views each showing one question. Each question contains a question and four possible answers.
-The student selects the Radio Button beside the option they think is the right answer and then press the 'Next Question' Button. Thet do this until they
+The student selects the Radio Button beside the option they think is the right answer and then press the 'Next Question' Button. They do this until they
 reach the last question. When finished the results will automatically be sent to the Firebase Database.
-PARTICULARS: 1. The app monitors inputs such as names and passwords and that each question have been answered, if not! Toasts appear indicating that something needs
+PARTICULARS: 1. The app monitors inputs such as names and passwords, and that each question have been answered, if not! Toasts appear indicating that something needs
                 to be completed.
-             2. After each question the result will be displayed in a Toast and then precede to the next question,
-             3. The initial login using subject Name or ID is not case sensitive but the app converts all inputs for subject name to capitals as all subject names on the
-                Firebase Database are in capitals and Firebase is case sensitive. This avoids problems with case sensitivity.
-             4. The login passowrd IS case sensitive for extra security.
-             5. Also there is a maxium number of login attempts allowed after which the login button will disable.
+             2. After each question the result will be displayed in a Toast and then proceed to the next question,
+             3. The initial login using subject Name or ID is not case sensitive but the app converts all inputs for subject name to capitals as I have all subject names on the
+                Firebase Database in capitals as a convention This avoids problems with case sensitivity from a user perspective.
+             4. The login password IS case sensitive for extra security.
+             5. Also there is a maximum number of login attempts allowed after which the login button will disable.
 Admin Access:
 The Administrator, or the lecturer, will have an Admin Logon, which is 'Admin', and an Admin password, this will take them to the admin section of the app. Here they can access
- a number of facilities. One is for the production of multiple choice tests, another allows for the viewing of a set of results from a particular test, and also there is a facility
- to change user and admin passwords.
+a number of facilities. One is for the production of multiple choice tests, another allows for the viewing of a set of results from a particular test, and also there is a facility
+to change user and admin passwords.
 
-Results - Each right question gets one mark. After the question the score count is incremented for each right answer and at the end of the test the final score, along with the
+Results - Each right question gets one mark. After a question is answered the score count is incremented for each right answer, and at the end of the test the final score, along with the
           student name is sent to the Firebase Database.
 */
-
-//                          The Main Activity performs the 'Front Door' to the application and requires a Login String and a Password for access.
-
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -73,26 +67,29 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+
+// ******************************************************Main Activity***************************************************************************
+/**
+ *  The Main Activity performs the 'Front Door' to the application and requires a Login String and a Password for access.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private DatabaseReference passWordDatabase;  //Initialise DatabaseReference for reference the ADMIN area where passwords are stored.
-    private EditText loginInput;                  // EditText reference for the EditText box on the layout which receives the users login input string
-    private EditText passwordInput;                   // EditText reference for the EditText box on the layout which receives the users login password string
+    private EditText loginInput;                 // EditText reference for the EditText box on the layout which receives the users login input string
+    private EditText passwordInput;              // EditText reference for the EditText box on the layout which receives the users login password string
     private TextView Remaining_Attempts;         // TextView reference to a TextView which displays the number of remaining attempts to login.
     private Button LoginBtn;                     // Reference to a Button on the layout for logging in.
     private int attempts =5;                     // This int sets the number of attempts for logging in allowed(Currently set to 5).
     private String userPassWord="000";
     private String adminPassWord="000";
 
-
-    @Override       // onCreat method
+    @Override       // onCreate method
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -128,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         // The following sets the references to layout objects.
         loginInput = (EditText)findViewById(R.id.login_name);
         passwordInput = (EditText)findViewById(R.id.login_password);
@@ -147,9 +143,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }// End of OnCreate
-
-    // The validate method below compares the user input data with the correct data and allows access if they match.
-    // The users Admin and User whill be directed to their respective Activities on correct login.
+     /**
+     *  The validate method below compares the user input data with the correct data and allows access if they match.
+     *  The users Admin and User whill be directed to their respective Activities on correct login.
+     * @param uInput  User input which is either Admin for the administrator, or a Test Title if it is a student.
+     * @param uPassword The password input by the admin  or user (student)
+     */
     private void validate (String uInput, String uPassword){
         // The following converts the string 'uInput', repersenting a subject to be tested on, or the Admin user,
         // to uppercase, making the input here not case sensitive and allowing flexibility for the user input.
@@ -161,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, AdminMain.class);
             startActivity(intent);
         }
-        // User Login : If uInput is not 'ADMIN' then it repersents a subject 'NAME' to be tested on,
+        // User Login : If uInput is not 'ADMIN' then it represents a subject 'NAME' to be tested on,
         // in capitals, and only the uPassword is validated to allow sanctioned students assess the test area.
         // If successful the student is directed to the student section of the app and also the
         // subject NAME is sent with the Intent.

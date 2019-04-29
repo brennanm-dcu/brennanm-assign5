@@ -1,14 +1,4 @@
 package com.example.homer.matbrensdaproject;
-
-/*
-******************** EndTest Activity *******************************
-
-The EndTest Activity provides the layout for the end of the Test. It also plays a
-key role with the StudentTest activity in providing an intermeditary step
-for the restarting that activity for the displaying of each new question as
-described in the activity.
-*/
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -17,12 +7,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
-
+// * ***************************** EndTest Activity *******************************
+/**
+ * The EndTest Activity provides the layout for the end of the Test. It also plays a
+ * key role with the StudentTest activity in providing an intermeditary step
+ * for the restarting that activity for the displaying of each new question as
+ * described in the activity.
+ */
 public class EndTest extends Activity {
 
-    TextView textViewEnd;
-    TextView textViewEndScore;
-
+    TextView textViewEnd;       //TextView reference 'textViewEnd' to a TextView which displays the final score to
+                                // a student after completing the test.
+    TextView textViewEndScore;  // TextView reference 'textViewEndScore' to a TextView which displays the final score to
+                                // a student after completing the test in % form.
     int scoreCount;             // This hold the current score or number of question answered right
     int questionCount;          // This hold the current question count.
 
