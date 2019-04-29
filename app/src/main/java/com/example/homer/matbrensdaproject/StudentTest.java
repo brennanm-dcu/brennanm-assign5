@@ -1,5 +1,31 @@
 package com.example.homer.matbrensdaproject;
 
+/*
+******************** StudentTest Activity *******************************
+
+The StudentTest Activity basically retrieves each question for the test from the Firsbase database,
+one  at a time, and displays the elements of each question on a listview. From which the student
+can select a right answer, then precede to the next question. This repeat until the test is over.
+This activity starts with an Intent from the StudentMain Activity. It first retrieves the name of
+the test from stored preferences where it was stored by the StudentMain Activity.
+Then it retrieves the first question from The Firebase Database for the particular test. Each question
+has a key to reference it in the database 'qx', where x is then question number. Each question has six
+parts, one is the question text itself and this always has key 'q'. Then there are four possible answers
+to the question always with keys 'a1' to 'a4', and finally there is the number of the correct answer
+which always has key "ans'. These keys are standard for each question.
+The six question parts, the question data, is retrieved by the readQuestionData method using FirebaseCallback
+to counter the asychronous aspect of downloading from Firebase. The readQuestionData method takes one part of
+the question at a time from the database and places it in a list. On method call the list is returned and
+in the body of the code the list elements are assigned to the respective layout elements and sisplayed to the
+student. The student then select an answer and presses 'NEXT QUESTION'. The answer selected is checked against the
+correct answer and if correct the score counter is incremented as is the question counter.
+The question counter is compared to the number of questons in the test and this determines if the test ends.
+At the end of processing each equestion, to restart the process, an Intent is activate to start Activity EnsTest and
+the score count and question count is passed in extras to it. The EndTest Activity, if it is not the last question, immediately
+activates an intent to start the StudenTest activity again, passing score count and question count back to it so it can process
+the next question from the start.
+*/
+
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -24,9 +50,8 @@ public class StudentTest extends Activity {
 
     private DatabaseReference multiple_choice_testDatabase;         //Initialise DatabaseReference for reference to question level
     private DatabaseReference length_testDatabase;                  //Initialise DatabaseReference for reference to subject level
-    private DatabaseReference myTestResultsDatabase;                //Initialise DatabaseReference for companion FirebaseDatabase to the Test Database to hold
-    // the Results for this test.
-
+    private DatabaseReference myTestResultsDatabase;                //Initialise DatabaseReference for a mpanion FirebaseDatabase
+                                                                    // to the Test Database to hold the Results for this test.
     private TextView questionView;                                  // TextView reference to a textView to display a question
     private TextView questionNo;                                    // TextView reference to a textView to display  the question Number
     private Button nextButton;                                      // Button reference to a Button to get the NEXT QUESTION
@@ -34,12 +59,12 @@ public class StudentTest extends Activity {
     private RadioButton radioButton2;
     private RadioButton radioButton3;
     private RadioButton radioButton4;
-    int scoreCount =0;                                              // Int Variable to hold the score
-    int questionCount =1;                                           // Int Variable to hold the current question number
-    int no_of_questions =0;                                         // Int Variable to hold the total number of question for this subject
-    String button_selected="0";                                     // String Variable to hold the name of the Button selected.
-    String test_title ;                                 // String Variable to hold the name of subject.
-    String question = "q1";                                         // String Variable to hold the name of the current question, initialised here to "q1".
+    int scoreCount =0;                                              // Int Variable to hold the score, initialised to '0'.
+    int questionCount =1;                                           // Int Variable to hold the current question number initialised to '1'.
+    int no_of_questions =0;                                         // Int Variable to hold the total number of questions for this subject
+    String button_selected="0";                                     // String Variable to hold the name of the RadioButton selected.
+    String test_title ;                                             // String Variable to hold the name of subject.
+    String questionTitle = "q1";                                    // String Variable to hold the name of the current question, initialised here to "q1".
     String answer;                                                  // String Variable to hold the number of the right answer to the question from the list of options.
     String Student;
 
@@ -51,7 +76,7 @@ public class StudentTest extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_test);
 
-        // Setting up the view elements to references
+        // The following sets the references to layout objects.
         questionView = (TextView)    findViewById(R.id.textView_question);
         questionNo   = (TextView)    findViewById(R.id.textViewQ_No);
         radioButton1 = (RadioButton) findViewById(R.id.radioButton1);
@@ -60,61 +85,60 @@ public class StudentTest extends Activity {
         radioButton4 = (RadioButton) findViewById(R.id.radioButton4);
         nextButton   = (Button)      findViewById(R.id.next_btn);
 
-        // The following 'if' statement initialises aspects of the activity such as
-        // determining the number of questions available for this test, and using it here
-        // to indicate this number to the user.
-        if(question=="q1") {
-
-
-            // Below- Retrieving the number of questions for this test from Shared Preferences.
-            // and displaying it in TextView reference 'questNo' which displays the
-            // current question number and 'of how many'.
+        // The following 'if' statement, based on it being the first question 'q1',
+        // initialises aspects of the activity such as retrieving the Subject 'NAME'
+        // from sharedPreferences, and determining the number of
+        // questions available for this test.
+        if(questionTitle=="q1") {
+            // The following retrieves the subject 'NAME' from sharedPreferences
+            // where it was put by StudentMain, and stores in in variable test_title.
             SharedPreferences settings;
             SharedPreferences.Editor prefEditor;
             settings = getSharedPreferences(String.valueOf("Student Data"), MODE_PRIVATE);
             test_title = settings.getString("keySelectedSubject","No Subject");
 
-            // The following method call sends the test title, stored in 'subject', to
-            // the method 'numOfQuestions' where the number of questions for this test
-            // is determined and stored in sharedPreferences, where it will be used
-            // in Activity NextQuestion.java later, as well as here.
+            // The following method call sends the test 'NAME", stored in 'test_title',
+            // to the method 'numOfQuestions' where the number of questions for this test
+            // is determined and then stored in sharedPreferences, where it will be used
+            // in Activity EndTest later, as well as next.
             numOfQuestions(test_title);
-
+            // Below- Retrieving the number of questions for this test from Shared Preferences.
+            // and displaying it in TextView reference 'questNo' which displays the
+            // current question number and 'of how many'.
             settings = getSharedPreferences(String.valueOf("Num Of Questions"), MODE_PRIVATE);
             no_of_questions = settings.getInt("key_numQuest", Integer.parseInt("0"));
             questionNo.setText("Q" + 1 + " of " + no_of_questions);
-        }
+        } // End of initialising the activity
 
 
-        // The following bundle thakes in information sent with Intentions
+        // The following bundle thakes in information sent with Intentions from EndTest activity.
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            scoreCount = extras.getInt("scoreCount");                          // Current ScoreCount SentBack from NextQuestion Activity
-            questionCount = extras.getInt("questionCount");                    // Current questionCount SentBack from NextQuestion Activity
-            question = ("q"+questionCount );                                        // Here the current questionCount is combined with "q" to produce
-            // the current question reference e.g. "qx" to select the next question
-            questionNo.setText("Q"+questionCount + " of " + no_of_questions);       // Displays then current question Number in textView against total number
-            // questions.
+            scoreCount = extras.getInt("scoreCount");           // Current ScoreCount SentBack from EndTest Activity
+            questionCount = extras.getInt("questionCount");     // Current questionCount SentBack from EndTest Activity
+            questionTitle = ("q"+questionCount );               // Here the current questionCount is combined with "q" to produce
+                                                                // the current questionTitle e.g. "qx" to select the next question
+            // Displays the current question Number in a textView against total number of questions.
+            questionNo.setText("Q"+questionCount + " of " + no_of_questions);
         }
-
         // The following sets a DatabaseReference 'multiple_choice_testDatabase ' to the FireBase DataBase
-        // with variables, or children, 'subject' and 'question' setting the level of the reference.
-        multiple_choice_testDatabase = FirebaseDatabase.getInstance().getReference().child(test_title).child(question);
+        // with children, 'subject' and 'questionTitle' setting the level of the reference.
+        multiple_choice_testDatabase = FirebaseDatabase.getInstance().getReference().child(test_title).child(questionTitle);
 
-        // The first task below is to create a title for the sister database of this test which will hold
-        //the results of the test for all students that will attempt it. The database name will be the 'test_title'
-        // appended with "_Results", and referenced by variable 'nameOfTestResultsRecord'.
+        // The next task is to create a title for the sister database of this test which will hold
+        // the results of the test for all students that will attempt it. The database name will be the 'test_title'
+        // appended with "Results", and referenced by variable 'nameOfTestResultsRecord'.
         // The myTestResultsDatabase DatabaseReference is the reference to the FireBase DataBase
-        // with variable, or child, 'nameOfTestResultsRecord'.
+        // with child, 'nameOfTestResultsRecord'.
         // This is used after the final question to upload to the Database the student name and their score.
         String nameOfTestResultsRecord = (test_title + "Results");
         myTestResultsDatabase = FirebaseDatabase.getInstance().getReference().child(nameOfTestResultsRecord).child("Student Name & Score");
 
-
         // The Following calls the FirebaseCallback method 'readQuestionData', which extracts the question data for
-        // the current question from the FireBase Database and then displays it in the relevant parts of the layout.
+        // the current question from the FireBase Database and returns it in a list. The question data is then
+        // extracted from the list and displayed it in the relevant parts of the layout.
         // The question element of the question data is displayed in the question textView and the four options,
-        // from which to select an answer, are displayed beside relevant RadioButtons in the RadioGroup. Also the number
+        // from which to select an answer, are displayed beside the relevant RadioButtons in the RadioGroup. Also the number
         // of the right answer in the list is held in a variable 'answer'  which will be used to determine
         // if the student selected the right answer to the question.
         readQuestionData(new FirebaseCallback() {
@@ -134,24 +158,18 @@ public class StudentTest extends Activity {
                 String btn2 = question_data_list.get(1);
                 String btn3 = question_data_list.get(2);
                 String btn4 = question_data_list.get(3);
-
-                // The following extracts the number the correct answer is at in the list question_data_list
+                // The following extracts the number the correct answer is at in the question_data_list
                 final String answer = question_data_list.get(4);
-
                 // The following sets the question part of the question data to the questionView TextView
                 questionView.setText(question_text);
-
                 // The following sets the answer parts of the question data into the relevant RadioButtons.
                 radioButton1.setText(btn1);
                 radioButton2.setText(btn2);
                 radioButton3.setText(btn3);
                 radioButton4.setText(btn4);
-
                 // The following sets a listener on the RadioGroup and sets the variable 'button_selected'
                 // to the number of the RadioButton Selected
                 RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup1);
-
-
                 radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     public void onCheckedChanged(RadioGroup arg0, int id) {
                         switch (id) {
@@ -176,63 +194,64 @@ public class StudentTest extends Activity {
                         }
                     }
                 });
-
                 // The following set a Listener on the NEXT button
                 // If the NEXT button is pressed and variable 'button_selected' is set to "0" indicating no RadioButtons have been
                 //                      selected, then a Toast is displayed asking the user to select a RadioButton.
                 // If the NEXT button is pressed and variable 'button_selected' is equal to the String 'answer' then the
-                //                      variable 'score' is incremented and a Toast displayed then we move to the next question.
+                //                      variables 'score' and 'questionCount' are incremented and a Toast displayed then
+                //                      we move to the next question.
                 // If the NEXT button is pressed and variable 'button_selected' is  NOT equal to the String 'answer' then the
-                //                      variable 'score' is NOT incremented and a Toast is displayed and then we move to the next question.
-
+                //                      variable 'score' is NOT incremented but the 'questionCount is
+                //                      and a Toast is displayed and then we move to the next question.
                 nextButton.setOnClickListener(new View.OnClickListener() {
-
                     @Override
                     public void onClick(View v) {
-
-
-                        if (button_selected == "0")
-
+                        if (button_selected == "0") // No question answered
                             Toast.makeText(StudentTest.this, "Please Select an Option", Toast.LENGTH_SHORT).show();
                             //else if (button_selected .equals("answer")) {
-                        else if (button_selected.equalsIgnoreCase(answer)) {
+                        else if (button_selected.equalsIgnoreCase(answer)) { //Right Answer selected
                             scoreCount++;
                             questionCount++;
-                            // The following 'if' statement determines if it is the last question, and if it is the student name and their score
-                            // is sent to the Database.
+                            // The following 'if' statement determines if it is the last question, and if
+                            // it is the student name is retrieved from sharedPreferences and sent with
+                            // their score to the Database.
                             if((questionCount-1)==no_of_questions){
                                 SharedPreferences settings;
                                 SharedPreferences.Editor prefEditor;
                                 settings = getSharedPreferences(String.valueOf("Student Data"), MODE_PRIVATE);
                                 Student = settings.getString("keyStudentName","No Subject");
                                 myTestResultsDatabase.child(Student).setValue(scoreCount);
-                            }
+                            } // The following activates an Intent to start the Endtest activity and pass the
+                              // the current scoreCounrand questioncount in putExtras
                             Intent intent = new Intent(StudentTest.this, EndTest.class);
                             intent .putExtra("scoreCount",scoreCount);
                             intent .putExtra("questionCount",questionCount);
                             startActivity(intent);
+                            //The following dispays a Toast indicating th eRight Answer and the % so far.
                             double percentage = ((scoreCount*100)/(no_of_questions));
                             Toast.makeText(StudentTest.this, " RIGHT Answer Current Score - " + percentage+"%", Toast.LENGTH_SHORT).show();
 
-                        } else {
+                        } else {  // Wrong answer selected
                             questionCount++;
-                            // The following 'if' statement determines if it is the last question, and if it is the student name and their score
-                            // is sent to the Database.
+                            // The following 'if' statement determines if it is the last question, and if
+                            // it is the student name is retrieved from sharedPreferences and sent with
+                            // their current score to the Database.
                             if((questionCount-1)==no_of_questions){
                                 SharedPreferences settings;
                                 SharedPreferences.Editor prefEditor;
                                 settings = getSharedPreferences(String.valueOf("Student Data"), MODE_PRIVATE);
                                 Student = settings.getString("keyStudentName","No Subject");
                                 myTestResultsDatabase.child(Student).setValue(scoreCount);
-                            }
+                            } // The following activates an Intent to start the Endtest activity and pass the
+                              // the current scoreCounrand questionCount in putExtras
                             Intent intent = new Intent(StudentTest.this, EndTest.class);
                             intent .putExtra("scoreCount",scoreCount);
                             intent .putExtra("questionCount",questionCount);
                             startActivity(intent);
+                            //The following dispays a Toast indicating th eRight Answer and the % so far.
                             double percentage = ((scoreCount*100)/(no_of_questions));
                             Toast.makeText(StudentTest.this, " WRONG! Answer Current Score - " + percentage+"%", Toast.LENGTH_SHORT).show();
                         }
-
                     }
                 }); //End of  nextButton.setOnClickListener
 
@@ -254,9 +273,7 @@ public class StudentTest extends Activity {
     // All this information is used to process one question and forms the question data which may be
     // held in a list of six String Items or in the FresBase Database as the elements of a question
     // chlid of a Test Subject Child off then main Applications main Database.
-
     private void readQuestionData(final FirebaseCallback firebaseCallback){
-
         // The following adds a ValueEventListener to the DatabaseReference multiple_choice_testDatabase
         multiple_choice_testDatabase.addValueEventListener(new ValueEventListener() {
             // The following creates a DataSnapshot of the  DatabaseReference multiple_choice_testDatabase
@@ -284,7 +301,6 @@ public class StudentTest extends Activity {
     private interface FirebaseCallback {
         void onCallback(List <String> question_list);
     }
-
     // The following method takes in the subject title for the test and determines the number of
     // questions available, which it then stored in SharedPreferences where it will be used
     // in Activity NextQuestion.java later.
@@ -297,7 +313,6 @@ public class StudentTest extends Activity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Variable 'no_of_questions' below holds the obtained number of questions available for this Test.
                 int no_of_questions = (int) dataSnapshot.getChildrenCount();
-
                 // The following stores the variable 'num_of_questions' in SharedPreferences
                 SharedPreferences settings;
                 SharedPreferences.Editor prefEditor;
@@ -313,7 +328,6 @@ public class StudentTest extends Activity {
         });
 
     }
-
 }
 
 

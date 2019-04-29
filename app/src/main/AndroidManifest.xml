@@ -24,7 +24,19 @@
             android:label="@string/title_activity_student_test" />
         <activity
             android:name=".EndTest"
-            android:label="@string/title_activity_end_test"></activity>
+            android:label="@string/title_activity_end_test" />
+        <activity
+            android:name=".AdminMain"
+            android:label="@string/title_activity_admin_main" />
+        <activity
+            android:name=".Score"
+            android:label="@string/title_activity_score" />
+        <activity
+            android:name=".NewQuestions"
+            android:label="@string/title_activity_new_questions" />
+        <activity
+            android:name=".NewQuestionsCreate"
+            android:label="@string/title_activity_new_questions_create"></activity>
     </application>
 
 </manifest>

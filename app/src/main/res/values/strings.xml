@@ -16,4 +16,41 @@
     <string name="student_input_name">Enter Name or Student ID</string>
     <string name="title_activity_student_test">StudentTest</string>
     <string name="title_activity_end_test">EndTest</string>
+    <string name="title_activity_admin_main">AdminMain</string>
+
+
+    <string name="admin_title_textView">ADMINISTRATION AREA</string>
+    <string name="create_new_test_Btn">CREATE A New TEST</string>
+    <string name="get_score_textView">Enter SUBJECT TITLE Below for Score</string>
+    <string name="get_score_btn">GET SCORE </string>
+    <string name="password_change_textView">Select ADIMN or STUDENT Button below to Change or view PASSWORD</string>
+    <string name="enter_subject_editBox">Enter SUBJECT for SCORE</string>
+    <string name="admin_radio_btn">ADMIN </string>
+    <string name="student_radio_btn">STUDENT</string>
+    <string name="current_password_textView">Current PASSWORD</string>
+    <string name="hint_newPassord">Enter New Password</string>
+    <string name="commit_new_password_Btn">COMMIT New PASSWORD</string>
+    <string name="title_activity_score">Score</string>
+    <string name="title_activity_new_questions">NewQuestions</string>
+
+
+    <string name="newTest_textView">CREATE A NEW TEST!</string>
+    <string name="newTest_name_textView">Enter The Name of the New TEST!!</string>
+    <string name="newTest_name_input_EditText">Enter New Test Name Here!</string>
+    <string name="new_testBtn">CREATE New TEST!</string>
+    <string name="title_activity_new_questions_create">NewQuestionsCreate</string>
+
+
+
+
+    <string name="q_info_textView">CREATE Questions!</string>
+    <string name="q_number_textView">Q</string>
+    <string name="question_editView">Pose Question Here!</string>
+    <string name="a1_option_editView">Option 1 Here</string>
+    <string name="a2_option_editView">Option 2 Here</string>
+    <string name="a3_option_editView">Option 3 Here</string>
+    <string name="a4_option_editView">Option 4 Here</string>
+    <string name="ans_option_editView">Option No of Right Ans Here</string>
+    <string name="add_questionBtn">ADD QUESTION </string>
+    <string name="finish_btn">FINISH</string>
 </resources>
