@@ -10,7 +10,19 @@
     <ListView
         android:id="@+id/score_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="527dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/score_textView"
+        android:layout_width="234dp"
+        android:layout_height="103dp"
+        android:layout_above="@+id/score_list"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="12dp"
+        android:text="@string/score_texttView"
+        android:textAlignment="center"
+        android:textColor="@color/colorBlack"
+        android:textSize="9pt" />
 </RelativeLayout>

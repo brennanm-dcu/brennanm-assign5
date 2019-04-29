@@ -36,7 +36,10 @@
             android:label="@string/title_activity_new_questions" />
         <activity
             android:name=".NewQuestionsCreate"
-            android:label="@string/title_activity_new_questions_create"></activity>
+            android:label="@string/title_activity_new_questions_create" />
+        <activity
+            android:name=".QuestionsEnd"
+            android:label="@string/title_activity_questions_end"></activity>
     </application>
 
 </manifest>

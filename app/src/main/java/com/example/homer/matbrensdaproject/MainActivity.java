@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView Remaining_Attempts;         // TextView reference to a TextView which displays the number of remaining attempts to login.
     private Button LoginBtn;                     // Reference to a Button on the layout for logging in.
     private int attempts =5;                     // This int sets the number of attempts for logging in allowed(Currently set to 5).
-    private  String userPassWord="000";
+    private String userPassWord="000";
     private String adminPassWord="000";
 
 
@@ -176,7 +176,6 @@ public class MainActivity extends AppCompatActivity {
         else {
             attempts --;
             Remaining_Attempts.setText("   Remaining is " + attempts);
-            Toast.makeText(MainActivity.this, " New Password = " +userPassWord , Toast.LENGTH_LONG).show();
             if(attempts==0){
                 LoginBtn.setEnabled(false);
                 Toast.makeText(MainActivity.this, "LOGIN Disabled! Load App Again", Toast.LENGTH_LONG).show();

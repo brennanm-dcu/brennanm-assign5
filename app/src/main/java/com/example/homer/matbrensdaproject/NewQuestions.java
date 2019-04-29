@@ -13,19 +13,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
 public class NewQuestions extends Activity {
 
     private Button creatNewTestBtn;
     private EditText new_test_name_input;
     private String newTestName;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_questions);
-
         //The following creates references to layout elements
         new_test_name_input=(EditText) findViewById(R.id.new_test_name_input_EitText);
         creatNewTestBtn = (Button)findViewById(R.id.new_testBtn);
@@ -39,6 +35,8 @@ public class NewQuestions extends Activity {
             @Override
             public void onClick(View view) {
                 newTestName = new_test_name_input.getText().toString();
+                // The following ensures the New Test Name is in capitals as this is the convention for the Database
+                newTestName = newTestName.toUpperCase();
                 if (newTestName .equals("")) {
                     Toast.makeText(NewQuestions.this, "Please Provide a New Test Name!!" + newTestName, Toast.LENGTH_SHORT).show();
                 }else {

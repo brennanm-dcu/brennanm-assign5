@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
@@ -24,7 +25,7 @@ public class Score extends Activity {
     private DatabaseReference length_testDatabase;
 
     private ArrayList <String> studentName= new ArrayList<>();
-
+    private TextView scoreTextView;
     String subject_title ;
     String subjectResults;
     int no_of_questions;
@@ -43,7 +44,8 @@ public class Score extends Activity {
             Toast.makeText(Score.this, "Subject Name is-" + subject_title, Toast.LENGTH_LONG).show();
         }
 
-
+        scoreTextView = (TextView)findViewById(R.id.score_textView);
+        scoreTextView.setText("Scores for Subject "+ subject_title);
 
         length_testDatabase = FirebaseDatabase.getInstance().getReference().child(subject_title);
         length_testDatabase.addValueEventListener(new ValueEventListener() {
@@ -57,7 +59,7 @@ public class Score extends Activity {
         });
 
 
-        subjectResults = (subject_title+"Results");
+        subjectResults = (subject_title+"-Results");
 
 
         scoreDatabase = FirebaseDatabase.getInstance().getReference().child(subjectResults);
@@ -81,7 +83,7 @@ public class Score extends Activity {
                     int question_elementxx= Integer.valueOf(question_element);
                     double percentage = ((question_elementxx*100)/(no_of_questions));
 
-                    studentName.add(key +"  scored - "+question_element+ " from "+no_of_questions + " Question(s)  = "  + percentage + "  % ");
+                    studentName.add(key +"  - "+question_element+ " From "+no_of_questions + " Qns Right  = "  + percentage + "  % ");
                     arrayAdapter.notifyDataSetChanged();
 
 

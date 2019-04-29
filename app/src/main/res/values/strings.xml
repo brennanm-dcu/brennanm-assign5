@@ -10,14 +10,26 @@
     <string name="title_activity_student_main">StudentMain</string>
 
 
-    <string name="student_textView">Welcome to theHACK</string>
-    <string name="student_textView2">Please Enter Your Name or ID Number </string>
+    <string name="student_textView">Rapid Assessment</string>
+    <string name="student_textView2">Please Enter Your Name or Student ID Number </string>
     <string name="student_button">Press to Start Test</string>
     <string name="student_input_name">Enter Name or Student ID</string>
     <string name="title_activity_student_test">StudentTest</string>
     <string name="title_activity_end_test">EndTest</string>
     <string name="title_activity_admin_main">AdminMain</string>
 
+    //Answer questions
+    <string name="radioBtn1">RadioButton 1</string>
+    <string name="radioBtn2">RadioButton 2</string>
+    <string name="radioBtn3">RadioButton 3</string>
+    <string name="radioBtn4">RadioButton 4</string>
+    <string name="nextBtn">NEXT BUTTON</string>
+    <string name="user_info_textView">QUESTION -</string>
+    <string name="qnumber_textView">Q</string>
+
+    //End Activity
+    <string name="endTextView">The End</string>
+    <string name="endScoreTextView">%</string>
 
     <string name="admin_title_textView">ADMINISTRATION AREA</string>
     <string name="create_new_test_Btn">CREATE A New TEST</string>
@@ -35,22 +47,32 @@
 
 
     <string name="newTest_textView">CREATE A NEW TEST!</string>
-    <string name="newTest_name_textView">Enter The Name of the New TEST!!</string>
+    <string name="newTest_name_textView">Enter Below The Name of the New TEST!</string>
     <string name="newTest_name_input_EditText">Enter New Test Name Here!</string>
     <string name="new_testBtn">CREATE New TEST!</string>
     <string name="title_activity_new_questions_create">NewQuestionsCreate</string>
 
 
-
-
-    <string name="q_info_textView">CREATE Questions!</string>
+    <string name="test_title_textView">Test Title</string>
+    <string name="q_info_textView">ENTER a Question in the question panel, and then four optional answers in the panels 1 to 4, and in the last panel put the number of the panel with the right answer</string>
     <string name="q_number_textView">Q</string>
-    <string name="question_editView">Pose Question Here!</string>
-    <string name="a1_option_editView">Option 1 Here</string>
-    <string name="a2_option_editView">Option 2 Here</string>
-    <string name="a3_option_editView">Option 3 Here</string>
-    <string name="a4_option_editView">Option 4 Here</string>
-    <string name="ans_option_editView">Option No of Right Ans Here</string>
+    <string name="q_hint_editView">Question Text Here!: </string>
+    <string name="a1_hint_editView">Answer 1 Here!:</string>
+    <string name="a2_hint_editView">Answer 2 Here!:</string>
+    <string name="a3_hint_editView">Answer 3 Here!:</string>
+    <string name="a4_hint_editView">Answer 4 Here!</string>
+    <string name="ans_hint_editView">No Of The Right Answer Here! :</string>
     <string name="add_questionBtn">ADD QUESTION </string>
     <string name="finish_btn">FINISH</string>
+    <string name="title_activity_questions_end">QuestionsEnd</string>
+
+    <string name="q_option_textView">Question: </string>
+    <string name="a1_option_texttView">Ans 1:</string>
+    <string name="a2_option_texttView">Ans 2:</string>
+    <string name="a3_option_texttView">Ans 3:</string>
+    <string name="a4_option_texttView">Ans 4:</string>
+    <string name="ans_option_texttView">No of The Right Answer Here :</string>
+
+    <string name="score_texttView">Score Text:</string>
+    <string name="finish_texttView">New Test COMPLETED!</string>
 </resources>

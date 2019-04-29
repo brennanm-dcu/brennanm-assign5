@@ -64,7 +64,6 @@ public class StudentMain extends Activity {
                     prefEditor.putString("keyStudentName", studentInputID);
                     prefEditor.putString("keySelectedSubject", selectedSubject);
                     prefEditor.commit();
-                    Toast.makeText(StudentMain.this, "Subject - " +selectedSubject + " and StudentId - " + studentInputID , Toast.LENGTH_LONG).show();
                     startActivity(intent);
                 }
             }

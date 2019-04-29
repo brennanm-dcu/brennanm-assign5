@@ -131,7 +131,7 @@ public class StudentTest extends Activity {
         // The myTestResultsDatabase DatabaseReference is the reference to the FireBase DataBase
         // with child, 'nameOfTestResultsRecord'.
         // This is used after the final question to upload to the Database the student name and their score.
-        String nameOfTestResultsRecord = (test_title + "Results");
+        String nameOfTestResultsRecord = (test_title + "-Results");
         myTestResultsDatabase = FirebaseDatabase.getInstance().getReference().child(nameOfTestResultsRecord).child("Student Name & Score");
 
         // The Following calls the FirebaseCallback method 'readQuestionData', which extracts the question data for

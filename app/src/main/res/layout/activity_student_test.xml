@@ -6,17 +6,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
+    android:background="@drawable/poly"
     tools:layout_editor_absoluteY="25dp">
 
     <TextView
         android:id="@+id/textView_question"
         android:layout_width="239dp"
-        android:layout_height="39dp"
+        android:layout_height="57dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="64dp"
+        android:textAlignment="center"
+        android:textColor="@color/colorPurpole"
+        android:textSize="8pt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,41 +46,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="RadioButton1" />
+            android:text="@string/radioBtn1" />
 
         <RadioButton
             android:id="@+id/radioButton2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="RadioButton2" />
+            android:text="@string/radioBtn2" />
 
         <RadioButton
             android:id="@+id/radioButton3"
             android:layout_width="247dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="RadioButton3" />
+            android:text="@string/radioBtn3" />
 
         <RadioButton
             android:id="@+id/radioButton4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="RadioButton4" />
+            android:text="@string/radioBtn4" />
     </RadioGroup>
 
     <Button
         android:id="@+id/next_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="137dp"
+        android:layout_height="49dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="NEXT QUESTION!"
+        android:background="@color/colorRed"
+        android:text="@string/nextBtn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,7 +97,9 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Select Your Answer and Press NEXT!"
+        android:textColor="@color/colorBlack"
+        android:textSize="8pt"
+        android:text="@string/user_info_textView"
         app:layout_constraintBottom_toTopOf="@+id/textView_question"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -103,12 +110,15 @@
     <TextView
         android:id="@+id/textViewQ_No"
         android:layout_width="60dp"
-        android:layout_height="22dp"
+        android:layout_height="30dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:text="@string/qnumber_textView"
+        android:textAlignment="center"
+        android:textColor="@color/colorBlack"
+        android:textSize="8pt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
