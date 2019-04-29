@@ -15,4 +15,5 @@
     <string name="student_button">Press to Start Test</string>
     <string name="student_input_name">Enter Name or Student ID</string>
     <string name="title_activity_student_test">StudentTest</string>
+    <string name="title_activity_end_test">EndTest</string>
 </resources>

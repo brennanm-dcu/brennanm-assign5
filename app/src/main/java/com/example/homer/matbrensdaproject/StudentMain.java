@@ -1,6 +1,7 @@
 package com.example.homer.matbrensdaproject;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;
@@ -38,6 +39,14 @@ public class StudentMain extends Activity {
                     Toast.makeText(StudentMain.this, "Please Enter Your Name or Student ID!", Toast.LENGTH_LONG).show();
                 }      else {
                     Intent intent = new Intent(StudentMain.this, StudentTest.class);
+
+                    SharedPreferences settings;
+                    SharedPreferences.Editor prefEditor;
+                    settings = getSharedPreferences("Student Data", MODE_PRIVATE);
+                    prefEditor = settings.edit();
+                    prefEditor.putString("keyStudentName", studentInputID);
+                    prefEditor.putString("keySelectedSubject", selectedSubject);
+                    prefEditor.commit();
                    // intent .putExtra("keySubject",selectedSubject);
                    // intent .putExtra("keyStudentID",studentInputID);
                     Toast.makeText(StudentMain.this, "Subject - " +selectedSubject + " and StudentId - " + studentInputID , Toast.LENGTH_LONG).show();
