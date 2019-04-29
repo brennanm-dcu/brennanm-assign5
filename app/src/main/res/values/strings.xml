@@ -1,0 +1,12 @@
+
+<resources>
+    <string name="app_name">RAPADWISR - </string>
+    <string name="app_title_info">The Rapid Assessment Tool</string>
+    <string name="app_title_name">Rapid Assessment Production And Deployment With Instant Score Return</string>
+    <string name="login_string">Login String </string>
+    <string name="login_password">Password  </string>
+    <string name="login_button">LOGIN</string>
+    <string name="login_attempts">LOGIN Attempts is 5</string>
+    <string name="title_activity_third">ThirdActivity</string>
+</resources>
+

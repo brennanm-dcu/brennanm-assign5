@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#5B1566</color>
+    <color name="colorPrimaryDark">#5B1566</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="colorBlack">#000000</color>
+    <color name="colorRed">#FF0000</color>
+    <color name="colorPurpole">#5B1566</color>
+    <color name="colorTop">#3F51B5</color>
+    <color name="colorToptop">#303F9F</color>
+</resources>
