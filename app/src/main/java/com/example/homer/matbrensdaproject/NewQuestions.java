@@ -2,6 +2,7 @@ package com.example.homer.matbrensdaproject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ public class NewQuestions extends Activity {
     private Button createNewTestBtn;
     private EditText new_test_name_input;
     private String newTestName;
+    private  final String TAG = this.getClass().getSimpleName();    // Log Tag
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,11 +34,12 @@ public class NewQuestions extends Activity {
         createNewTestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.i(TAG, "onClick: ---------------NEW QUESTIONS - CREATE A NEW TEST CLICKED!!!!-----------");
                 newTestName = new_test_name_input.getText().toString();
                 // The following ensures the New Test Name is in capitals as this is the convention for the Database
                 newTestName = newTestName.toUpperCase();
                 if (newTestName .equals("")) {
-                    Toast.makeText(NewQuestions.this, "Please Provide a New Test Name!!" + newTestName, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewQuestions.this, "Please Provide The New Test Name!" + newTestName, Toast.LENGTH_SHORT).show();
                 }else {
                     Intent intent = new Intent(NewQuestions.this, NewQuestionsCreate.class);
                     intent.putExtra("keyNewTestName", newTestName);

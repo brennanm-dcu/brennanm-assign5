@@ -2,6 +2,7 @@ package com.example.homer.matbrensdaproject;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -61,7 +62,8 @@ public class StudentTest extends Activity {
     String questionTitle = "q1";                                    // String Variable to hold the name of the current question, initialised here to "q1".
     String answer;                                                  // String Variable to hold the number of the right answer to the question from the list of options.
     String Student;
-    ArrayList <String> question_data_list= new ArrayList<String>();     // ArrayList to hold strings of question data such as question Text, answers, and correct answer
+    ArrayList <String> question_data_list= new ArrayList<String>();      // ArrayList to hold strings of question data such as question Text, answers, and correct answer
+    private  final String TAG = this.getClass().getSimpleName();    // Log Tag
     // onCreate Method
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,6 +197,7 @@ public class StudentTest extends Activity {
                 nextButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Log.i(TAG, "onClick: ---------------Student Questions - NEXT QUESTION CLICKED!!!-----------");
                         if (button_selected == "0") // No question answered
                             Toast.makeText(StudentTest.this, "Please Select an Option", Toast.LENGTH_SHORT).show();
                             //else if (button_selected .equals("answer")) {

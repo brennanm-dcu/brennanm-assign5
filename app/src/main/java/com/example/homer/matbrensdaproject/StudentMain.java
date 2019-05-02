@@ -3,6 +3,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +21,7 @@ public class StudentMain extends Activity {
                                         // layout which takes in the student 'name' or 'ID'.
     private String selectedSubject;     // Variable reference to the subject selected by student to be tested on.
     Button videoBtn;                    // Button reference 'videoBtn' for the Button on the layout to access a DemoVideo.
+    private  final String TAG = this.getClass().getSimpleName();    // Log Tag
 
     @Override   // onCreate method
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class StudentMain extends Activity {
             @Override
             // The Button should be pressed after the student entered a student Name or ID
             public void onClick(View v) {
+                Log.i(TAG, "onClick:----------Student Area - START TEST BUTTON CLICKED!!!-----------");
                 // After the Button was clicked the studentID EditText reference is read for input
                 // stored in variable 'studentInputID'.
                 String studentInputID =(studentID.getText().toString());

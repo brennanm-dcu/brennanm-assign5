@@ -2,6 +2,7 @@ package com.example.homer.matbrensdaproject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,6 +39,7 @@ public class AdminMain extends Activity {
     private TextView currentPassword;                       //TextView which shows then current password.
     private  String userPassWord="000";                     //String to hold the user Password
     private String adminPassWord="000";                      //String to hold the admin Password
+    private  final String TAG = this.getClass().getSimpleName();    // Log Tag
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +70,7 @@ public class AdminMain extends Activity {
         createTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i(TAG, "onClick: ---------------ADMIN AREA - CREATE A NEW TEST CLICKED!!!!-----------");
                 Intent intent = new Intent(AdminMain.this, NewQuestions.class);
                 startActivity(intent);
             }
@@ -81,6 +84,7 @@ public class AdminMain extends Activity {
                 score();
             }
         });
+
         //********************************* Setting a Listener on the RadioGroup ****************
         // The following sets a listener on the RadioGroup and sets the variable 'button_selected'
         // to the number of the RadioButton Selected
@@ -117,6 +121,7 @@ public class AdminMain extends Activity {
         changePasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i(TAG, "onClick: ---------------CHANGE PASSWORD BUTTON CLICKED!!!!--------------");
                String passwordInput= changePasswordInput.getText().toString();
                 if (passwordInput .equals("")){
                     Toast.makeText(AdminMain.this, "Please Enter a New Password!", Toast.LENGTH_LONG).show();
@@ -143,11 +148,12 @@ public class AdminMain extends Activity {
      *   a Toast id displayed to indicate to the user to input a Subject.
      */
      public void score(){
+         Log.i(TAG, "onClick: ---------------SCORE REQUESTED!!!!-------------------");
         //The following retrieves any input in the EditText
         String subject_title =subject_title_input.getText().toString();
         // If there is NO input then a Toast in generated.
         if (subject_title .equals("")) {
-            Toast.makeText(AdminMain.this, "Please Enter a Subject Title-", Toast.LENGTH_LONG).show();
+            Toast.makeText(AdminMain.this, "Please Enter a Subject Title ", Toast.LENGTH_LONG).show();
         // If input is present then it is sent to the Score activity with an Intent
         }else{
             Intent intent = new Intent(AdminMain.this, Score.class);

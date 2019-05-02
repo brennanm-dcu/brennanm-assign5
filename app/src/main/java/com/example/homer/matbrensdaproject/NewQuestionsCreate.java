@@ -2,6 +2,7 @@ package com.example.homer.matbrensdaproject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +43,7 @@ public class NewQuestionsCreate extends Activity {
     int returnedQuestionNumber=0;                              // Int to hold the returned question number from Activity AdminEnd.
     private Button btnfinish;                                  // Button reference to the Finish button.
     private Button addQuestion;                                // Button reference to the adQuestion button.
+    private  final String TAG = this.getClass().getSimpleName();    // Log Tag
 
     @Override  //on create Method
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +99,7 @@ public class NewQuestionsCreate extends Activity {
         btnfinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.i(TAG, "onClick: ---------------NewQuestionsCreate - FINISHED CLICKED!!!!-----------");
                 Intent intent = new Intent(NewQuestionsCreate.this, QuestionsEnd.class);
                 startActivity(intent);
             }
@@ -106,6 +109,7 @@ public class NewQuestionsCreate extends Activity {
         addQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.i(TAG, "onClick: ---------------ADD QUESTION CLICKED!!!!!-----------");
                 String newQuestion = editNewQuestion.getText().toString().trim();
                 String newA1 = editNewA1.getText().toString().trim();
                 String newA2 = editNewA2.getText().toString().trim();
@@ -115,7 +119,7 @@ public class NewQuestionsCreate extends Activity {
 
                 //The following checks that all EditText boxes have been filled in and if not a Toast is displayed to remind the user to do so.
                 if ((newQuestion.equals("")) || (newA1.equals("")) || (newA2.equals("")) || (newA3.equals("")) || (newA4.equals("")) || (newAns.equals("")) ) {
-                    Toast.makeText(NewQuestionsCreate.this, "Please Fill In All Options!" + newTestName, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewQuestionsCreate.this, "Please Fill In All Options Above!", Toast.LENGTH_SHORT).show();
                 // If all EditText boxes have been filled in then the question data is set in the Firebase database to form a question in the test
                 // This is followed by incrementing the Question number and then sending an Intent to activate the 'QuestionsEnd' activity and pass the current
                 // question number and test name strings in putExtras.

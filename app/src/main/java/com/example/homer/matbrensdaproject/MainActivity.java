@@ -62,6 +62,7 @@ Results - Each right question gets one mark. After a question is answered the sc
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
     private int attempts =5;                     // This int sets the number of attempts for logging in allowed(Currently set to 5).
     private String userPassWord="000";
     private String adminPassWord="000";
+    private  final String TAG = this.getClass().getSimpleName();    // Log Tag
 
     @Override       // onCreate method
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,7 +141,9 @@ public class MainActivity extends AppCompatActivity {
         LoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i(TAG, "onClick: ---------------LOGIN BUTTON CLICKED!!!!-------------------");
                 validate(loginInput.getText().toString(), passwordInput.getText().toString());
+                Log.i(TAG, "onClick:--------------RETURN FROM LOGIN VALIDATION----------------");
             }
         });
     }// End of OnCreate
@@ -157,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
         // Admin Login: if the uInput = ADMIN and with the correct admin password
         if ((uInput .equals("ADMIN")) && (uPassword .equals(adminPassWord))) {
             // with correct login the ADMIN is directed to the admin section of the app.
+            Log.i(TAG, "onClick:------ADMIN LOGIN--------");
             Intent intent = new Intent(MainActivity.this, AdminMain.class);
             startActivity(intent);
         }
@@ -165,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
         // If successful the student is directed to the student section of the app and also the
         // subject NAME is sent with the Intent.
         else if (uPassword .equals(userPassWord)){
+            Log.i(TAG, "onClick:--------------STUDENT LOGIN--------------");
              Intent intent = new Intent(MainActivity.this, StudentMain.class);
              intent .putExtra("keySubject",uInput);
              startActivity(intent);
@@ -173,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
         // the variable 'attempts' holding the allowable number of attempts is decremented.
         // if the maximum number of attempts is exceeded then the Login Button is disabled.
         else {
+            Log.i(TAG, "onClick:------FALSE LOGIN------------");
             attempts --;
             Remaining_Attempts.setText("   Remaining is " + attempts);
             if(attempts==0){

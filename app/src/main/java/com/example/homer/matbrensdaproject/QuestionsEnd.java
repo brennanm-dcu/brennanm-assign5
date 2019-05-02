@@ -3,6 +3,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.widget.TextView;
+
+import java.util.Timer;
+import java.util.TimerTask;
 // ***************************** QuestionsEnd Activity *******************************
 /**  The  QuestionsEnd Activity provides the layout for the end of a test by a student. It
  * also plays a key role with the NewQuestionCreate activity in providing an intermeditary
@@ -19,13 +22,14 @@ public class QuestionsEnd extends Activity {
         setContentView(R.layout.activity_questions_end);
 
         // This activity is always started by an Intent from the 'NewQuestionCreate' activity.
-        // If the Intent results from the the 'ADD QUESTION' button been pressed, then data is sent
-        // in the Extras and this is extracted and then sent back to the 'NewQuestionCreate' activity
-        // to restart that activity and create a new question with current question number and question
-        // name sent in Extras.
-        // If the Intent results from the the 'FINISH' button been pressed, then there is no
-        // Data in Extras and the so the question creating process ends and No Intent is sent back to
-        // the 'NewQuestionCreate' activity and  this activity displays 'NEW TEST COMPLETED' from the layout.
+        // If the Intent results from the 'ADD QUESTION' button been pressed, then data is sent
+        // in Extras and this is extracted here and then sent back to the 'NewQuestionCreate' activity
+        // to restart that activity and create a new question with the current question number, and
+        //  question name, sent in Extras.
+        // If the Intent results from the the 'FINISH' button been pressed in the 'NewQuestionCreate' activity,
+        // then there is no Data in Extras and so the question creating process ends and NO Intent is activated to start
+        // the 'NewQuestionCreate' activity. Then this activity displays 'NEW TEST COMPLETED' from the layout.
+        // This is displayed for 5 seconds and then an Intent is activated and takes the user back to the Home page.
         Bundle extras = getIntent().getExtras();
          if(extras !=null){
             newQuestionNumber =extras.getInt("QUESTION_NUM");
@@ -34,6 +38,16 @@ public class QuestionsEnd extends Activity {
             intent .putExtra("QUESTION_COUNT",newQuestionNumber);
             intent .putExtra("keyNewTestName",newTestName);
             startActivity(intent);
-        }
+        }else {
+             // After 5 seconds then following executes returning to the Home Page.
+             new Timer().schedule(new TimerTask() {
+                 @Override
+                 public void run() {
+                     // this code will be executed after 5 seconds
+                     Intent intent = new Intent(QuestionsEnd.this, MainActivity.class);
+                     startActivity(intent);
+                 }
+             }, 5000);
+         }
     }
 }
