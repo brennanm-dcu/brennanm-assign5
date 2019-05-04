@@ -8,11 +8,11 @@
 I work in a training environment, lecturing in Communications, IT and Electronic Engineering to Degree Level, with college students and with students
 on other courses.
 We have the following reoccurring requirements:
-•	The need to initially evaluate students’ needs and suitability for a course.
-•	To do quick assessments to monitor students progress.
-•	To conduct simple continuous assessment tests.
+â€¢	The need to initially evaluate studentsâ€™ needs and suitability for a course.
+â€¢	To do quick assessments to monitor students progress.
+â€¢	To conduct simple continuous assessment tests.
 Most of these are of a brief nature and may simply consist of a short set of questions, multiple choice questions or to identify features from images.
-These are not full blown 3 hour exams but quick assessments to determine the state of a student’s knowledge.
+These are not full blown 3 hour exams but quick assessments to determine the state of a studentâ€™s knowledge.
 These tests have been paper based and consumed time to administer and run. A computer based approach is a solution but availability of these recourse
 can be an issue as computer rooms are constantly in use.
 
@@ -33,7 +33,7 @@ where they can be accessed by the app.
 
 The application will use of the following Android API classes:
 1.  Multimedia graphics
-2.  Firebase Database – to store questions.
+2.  Firebase Database â€“ to store questions.
 
  ***************************************************************************************************************
                                                        APPLICATION OPERATION
@@ -58,3 +58,34 @@ to change user and admin passwords.
 
 Results - Each right question gets one mark. After a question is answered the score count is incremented for each right answer, and at the end of the test the final score, along with the
           student name is sent to the Firebase Database.
+          
+          
+**********************************************************  CITATIONS   ************************************************
+
+My Project contains code influended and adapted from these URL: 
+
+https://www.youtube.com/watch?v=E5IThLHTl6I
+https://www.youtube.com/watch?v=SDlg9u2MpM8
+https://www.youtube.com/watch?v=TA28ZGsvK-0
+https://www.youtube.com/watch?v=EConlbYa-og
+https://www.youtube.com/watch?v=1Dg-oPhttLA
+https://www.youtube.com/watch?v=SiGIAvMH2Dk
+https://www.youtube.com/watch?v=-4bZ_rfvBTk
+https://www.youtube.com/watch?v=rRpl7CexurE
+https://github.com/Suhanshu123/Kv-z
+https://github.com/eshinkawa/androidquiz
+https://github.com/adityapandey9/firebase-android-quiz-app
+https://www.youtube.com/watch?v=voYDlnfcchs
+https://www.youtube.com/watch?v=YRlyRnhztA0
+https://stackoverflow.com/questions/15675944/how-to-play-video-from-raw-folder- with-  android-device
+https://www.technobyte.org/play-video-file-android-studio-using-videoview-tutorial/
+https://firebase.google.com/docs/database/android/read-and-write
+https://www.androidhive.info/2016/10/android-working-with-firebase-realtime-   database/
+
+Image of Socrates - https://twitter.com/kaylafeenstra/status/584409862089474048
+
+https://developer.android.com/reference/android (General References)  Permission:  Apache License. Retrieved on: 14th November 2017
+
+I express my appreciation to all the above.
+
+
